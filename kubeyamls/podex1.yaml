@@ -1,3 +1,4 @@
+#Example POD YAML for PowerPC LE demonstrating how to provide securityContext options
 apiVersion: "v1"
 kind: "Pod"
 metadata:
