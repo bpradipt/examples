@@ -21,7 +21,7 @@ spec:
             containers:
                 -
                     name: oom-app
-                    image: 'bpradipt/stress-ppc64le'
+                    image: 'bpradipt/stress'
                     imagePullPolicy: IfNotPresent
                     resources:
                         requests:
