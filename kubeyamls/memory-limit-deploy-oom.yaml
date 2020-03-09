@@ -29,7 +29,7 @@ spec:
                         limits:
                             memory: 200M
                     command:
-                        - stress
+                        - stress-ng
                     args:
                         - '--vm'
                         - '1'
