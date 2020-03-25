@@ -1,0 +1,36 @@
+##
+## Generated using https://github.com/bpradipt/generator-kubegen.git
+##
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    labels:
+        name: network-debug-app
+    name: network-debug-app
+    namespace: default
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: network-debug-app
+    template:
+        metadata:
+            labels:
+                app: network-debug-app
+        spec:
+            containers:
+                -
+                    name: network-debug-app
+                    image: 'bpradipt/network-multitool-ppc64le'
+                    imagePullPolicy: IfNotPresent
+                    resources:
+                        requests:
+                            cpu: 50m
+                            memory: 100M
+                        limits:
+                            cpu: 50m
+                            memory: 100M
+                    securityContext:
+                        runAsUser: 0
+                        capabilities:
+                            add: ["NET_ADMIN"]
