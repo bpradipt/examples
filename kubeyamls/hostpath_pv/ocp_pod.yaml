@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+    - image: nginx:latest
+      imagePullPolicy: IfNotPresent
+      name: nginx
+      ports:
+      - containerPort: 80
+        protocol: TCP
+      securityContext:
+        privileged: true
+      volumeMounts:
+      - mountPath: /data
+        name: hostpath-privileged
+  securityContext: {}
+  volumes:
+      - name: hostpath-privileged
+        persistentVolumeClaim:
+          claimName: task-pvc-volume
