@@ -1,0 +1,27 @@
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: "ruby-sample-build"
+spec:
+  runPolicy: "Serial"
+  triggers:
+    -
+      type: "ImageChange"
+  source:
+    git:
+      uri: "https://github.com/openshift/ruby-hello-world"
+  strategy:
+    dockerStrategy:
+      from:
+        kind: "DockerImage"
+        name: "registry.redhat.io/rhscl/ruby-25-rhel7:latest"
+    pullSecret:
+      name: "external-registry"
+  output:
+    to:
+      kind: "DockerImage"
+      name: "docker.io/bpradipt/origin-ruby-sample:latest"
+    pushSecret:
+      name: "external-registry"
+  postCommit:
+      script: "bundle exec rake test"
