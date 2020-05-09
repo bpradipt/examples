@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: sctpdemo
+  name: sctpserver
+  labels:
+    app: sctpserver
+spec:
+  containers:
+    - name: sctpserver
+      image: fedora:31
+      command: ["/bin/sh", "-c"]
+      args:
+       ["dnf install -y lksctp-tools && sctp_test -H localhost -P 30100 -l"]
+      ports:
+        - containerPort: 30100
+          name: sctpserver
+          protocol: SCTP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: sctpdemo
+  name: sctpserver
+  labels:
+    app: sctpserver
+spec:
+  selector:
+    app: sctpserver
+  ports:
+    - name: sctpserver
+      protocol: SCTP
+      port: 30100
+      targetPort: 30100
+  type: ClusterIP
