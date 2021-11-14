@@ -1,0 +1,57 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: shellinabox
+  labels:
+    name: shellinabox
+spec:
+  type: NodePort
+  ports:
+  - port: 4200
+    protocol: TCP
+    targetPort: 4200
+  selector:
+    name: shellinabox
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shellinabox
+  labels:
+    name: shellinabox
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: shellinabox
+  template:
+    metadata:
+      labels:
+        name: shellinabox
+    spec:
+      containers:
+      - name: shellinabox
+        image:  quay.io/bpradipt/shellinabox:latest
+        resources:
+          limits:
+            cpu: 100m
+            memory: 50Mi
+          requests:
+            cpu: 100m
+            memory: 10Mi
+        env:
+        - name: SIAB_USER
+          value: guest
+        - name: SIAB_PASSWORD
+          value: password         
+        ports:
+        - containerPort: 4200
+          protocol: TCP
+        livenessProbe:
+          httpGet:
+            scheme: HTTPS
+            path: /
+            port: 4200
+          initialDelaySeconds: 300
+          timeoutSeconds: 30
+        
