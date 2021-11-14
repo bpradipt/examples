@@ -5,7 +5,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
     labels:
-        name: nginx-sample
+        app: nginx-sample
     name: nginx-sample
     namespace: default
 spec:
